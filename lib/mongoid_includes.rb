@@ -9,4 +9,8 @@ Mongoid::Contextual::Mongo.send :prepend, Mongoid::Includes::EagerLoad
 Mongoid::Contextual::Memory.send :prepend, Mongoid::Includes::EagerLoad
 
 Mongoid::Criteria.send :prepend, Mongoid::Includes::Criteria
-Mongoid::Association::Referenced::Eager::Base.send :prepend, Mongoid::Includes::Relations::Eager
+if Gem::Version.new(Mongoid::VERSION) >= Gem::Version.new('7.0')
+  Mongoid::Association::Referenced::Eager::Base.send :prepend, Mongoid::Includes::Relations::Eager
+else
+  Mongoid::Relations::Eager::Base.send :prepend, Mongoid::Includes::Relations::Eager
+end
